@@ -7,6 +7,7 @@ module.exports = new class AvatarCommand extends Command {
             name: 'avatar',
             aliases: ['av'],
             ignoreGuilds: false,
+            ignoreDMs: true,
         });
     }
     private async getUser(msg: Message, id: string) {

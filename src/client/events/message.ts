@@ -18,7 +18,7 @@ export default async (msg: Message) => {
         );
     if (!currentPrefix) return;
 
-    let [, [cmdName] ] = msg.client.parseArgs(
+    let [, [cmdName = ''] ] = msg.client.parseArgs(
         msg.content.slice(currentPrefix.length),
         msg.client.config.args!
     );
@@ -30,9 +30,11 @@ export default async (msg: Message) => {
 
     if (!cmd) {
         return (msg.client.config.ignoreBots && msg.author.bot)
-            || (msg.client.config.ignoreDMs && msg.channel.type === 'text')
+            || (msg.client.config.ignoreDMs && msg.channel.type === 'dm')
             || (msg.client.config.ignoreGuilds && msg.guild)
-            || msg.client.config.unknownCommandMessage && msg.client.sendToChannel(
+            || msg.client.config.unknownCommandMessage
+            && cmdName
+            && msg.client.sendToChannel(
                 msg.client.config.unknownCommandMessage,
                 msg.guild!,
                 msg,
@@ -41,7 +43,7 @@ export default async (msg: Message) => {
     if (
         (cmd.ignoreBots && msg.author.bot)
             || (cmd.ignoreGuilds && msg.guild)
-            || (cmd.ignoreDMs && msg.channel.type === 'text')
+            || (cmd.ignoreDMs && msg.channel.type === 'dm')
     ) return;
 
     let [ text, args, flags ] = msg.client.parseArgs(msg.content.slice(currentPrefix.length), cmd.args!);

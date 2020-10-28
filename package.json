@@ -1,7 +1,7 @@
 {
     "name": "aurora-djs",
     "author": "1s3k3b",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "A command framework for Discord.js",
     "main": "./dist/src/index.js",
     "types": "./typings/src/index.d.ts",
